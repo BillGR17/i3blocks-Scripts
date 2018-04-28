@@ -1,0 +1,15 @@
+#!/usr/bin/env node
+const {execSync}=require('child_process');
+var b=process.env.BLOCK_INSTANCE;
+if (!b) {
+  b=execSync(`echo $(ip route get 1.0.0.1 | grep -Po '(?<=(dev )).*(?= src)')`).toString('utf8').replace(/\n.*$/, '');
+}
+const x=execSync(`echo $(grep '`+b+`' /proc/net/dev | awk -F: '{print  $2}' | awk '{print $1" "$9}')`).toString('utf8').replace(/\n.*$/, '').split(' ');
+const p=execSync(`cat /tmp/.bandwidth`).toString('utf8').replace(/\n.*$/, '').split(' ')[0].split('\n');
+function format(bytes) {
+   var sizes = ['b', 'kb', 'mb', 'gb', 'tb'];
+   if (bytes == 0) return '0 b';
+   var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+   return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+};
+console.log(' '+format(x[0]-p[0]),' '+format(x[1]-p[1]));

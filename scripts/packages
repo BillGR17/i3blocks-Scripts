@@ -1,0 +1,7 @@
+#!/usr/bin/env node
+const {spawn}=require('child_process');
+const packages=spawn('checkupdates');
+packages.stdout.on('data', (d) =>{
+  d=(d.toString('utf8').split(/\r\n|\r|\n/).length-1);
+  console.log(d)
+});

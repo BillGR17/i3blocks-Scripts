@@ -1,11 +1,13 @@
 #!/usr/bin/env node
 const {execSync}=require('child_process');
+const {exec}=require('child_process');
 var b=process.env.BLOCK_INSTANCE;
 if (!b) {
   b=execSync(`echo $(ip route get 1.0.0.1 | grep -Po '(?<=(dev )).*(?= src)')`).toString('utf8').replace(/\n.*$/, '');
 }
 const x=execSync(`echo $(grep '`+b+`' /proc/net/dev | awk -F: '{print  $2}' | awk '{print $1" "$9}')`).toString('utf8').replace(/\n.*$/, '').split(' ');
-const p=execSync(`cat /tmp/.bandwidth`).toString('utf8').replace(/\n.*$/, '').split(' ')[0].split('\n');
+const p=execSync(`cat /tmp/.bandwidth`).toString('utf8').replace(/\n.*$/, '').split(',')[0].split(' ');
+exec(`echo "`+ x.join(' ') +`" > /tmp/.bandwidth`);
 function format(bytes) {
    var sizes = ['b', 'kb', 'mb', 'gb', 'tb'];
    if (bytes == 0) return '0 b';

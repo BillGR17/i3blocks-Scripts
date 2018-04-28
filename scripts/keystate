@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const {exec}=require('child_process');
-const b=process.env.BLOCK_INSTANCE,p;
+const b=process.env.BLOCK_INSTANCE;
+let p;
 switch(b) {
     case 'caps':
         p=`'{print $4}'`;

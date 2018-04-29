@@ -1,0 +1,7 @@
+#!/usr/bin/env node
+const {execSync} = require('child_process'),format=require('./lib/format');
+var b=process.env.BLOCK_INSTANCE;
+if (!b) {
+  b='MemTotal';
+}
+console.log(format(parseInt(execSync(`cat /proc/meminfo| grep ${b} |awk '{print $2}'`).toString('utf8'))*1024));

@@ -1,0 +1,35 @@
+#!/usr/bin/env node
+const {execSync}=require('child_process');
+const b=process.env.BLOCK_INSTANCE;
+var item,status,awk,icon;
+if (!b) {
+  item='battery_BAT0'
+}else {
+  item=b.split(';')[0]
+  if (b.split(';')[1]) {
+    status=b.split(';')[1];
+    awk=4;
+  }else {
+    status='percentage'
+    awk=2;
+  }
+}
+const p =Number(execSync(`upower -i /org/freedesktop/UPower/devices/${item}|grep percentage |awk '{print $2}'`).toString('utf8').replace('%',''));
+switch(true){
+  case p>=90:
+    icon=''
+    break;
+  case p>70:
+    icon=''
+    break;
+  case p>40:
+    icon=''
+    break;
+  case p>20:
+    icon=''
+    break;
+  default:
+    icon=''
+    break;
+}
+console.log(icon,execSync(`upower -i /org/freedesktop/UPower/devices/${item}|grep ${status} |awk '{print $${awk}}'`).toString('utf8').replace('.',':'));

@@ -2,6 +2,7 @@
 const {execSync}=require('child_process');
 const {exec}=require('child_process');
 var b=process.env.BLOCK_INSTANCE;
+exec(`test ! -f /tmp/.bandwidth && echo 0 0 > /tmp/.bandwidth `);
 if (!b) {
   b=execSync(`echo $(ip route get 1.0.0.1 | grep -Po '(?<=(dev )).*(?= src)')`).toString('utf8').replace(/\n.*$/, '');
 }

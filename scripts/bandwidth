@@ -1,6 +1,5 @@
 #!/usr/bin/env node
-const {execSync}=require('child_process');
-const {exec}=require('child_process');
+const {execSync}=require('child_process'),{exec}=require('child_process'),format=require('./lib/format');
 var b=process.env.BLOCK_INSTANCE;
 exec(`test ! -f /tmp/.bandwidth && echo 0 0 > /tmp/.bandwidth `);
 if (!b) {
@@ -9,11 +8,4 @@ if (!b) {
 const x=execSync(`echo $(grep '`+b+`' /proc/net/dev | awk -F: '{print  $2}' | awk '{print $1" "$9}')`).toString('utf8').replace(/\n.*$/, '').split(' ');
 const p=execSync(`cat /tmp/.bandwidth`).toString('utf8').replace(/\n.*$/, '').split(',')[0].split(' ');
 exec(`echo "`+ x.join(' ') +`" > /tmp/.bandwidth`);
-function format(bytes,d) {
-  if(bytes < 1024) return bytes + " b";
-  else if(bytes < 1048576) return(bytes / 1024).toFixed(0) + " kb";
-  else if(bytes < 1073741824) return(bytes / 1048576).toFixed(2) + " mb";
-  else return(bytes / 1073741824).toFixed(2) + " gb";
-}
-
 console.log(' '+format((x[0]-p[0]),2),' '+format((x[1]-p[1]),2));

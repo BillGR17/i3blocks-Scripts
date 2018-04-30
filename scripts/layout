@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const {execSync}=require('child_process');
 var b=process.env.BLOCK_INSTANCE.split(';'),
-    exec=Number(execSync(`xset -q|grep LED| awk '{ print $10 }'`).toString('utf8').replace(/\n.*$/, ''));
+  exec=Number(execSync(`xset -q|grep LED| awk '{ print $10 }'`).toString('utf8').replace(/\n.*$/, ''));
 for (var i = 0; i < b.length; i++) {
   var num=Number(b[i].split(',')[1]);
   if (b[i]!==''&&exec==num||exec>=num&&exec<=(num+6)) {

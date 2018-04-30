@@ -1,0 +1,22 @@
+#!/usr/bin/env node
+const {execSync} = require('child_process'),b=process.env.BLOCK_INSTANCE;
+
+var status = execSync(`playerctl status`).toString('utf8').replace(/\n.*$/, ''),
+  title = execSync(`playerctl -p ${b} metadata title`).toString('utf8'),
+  artist = execSync(`playerctl -p ${b} metadata artist`).toString('utf8'),
+  album = execSync(`playerctl -p ${b} metadata album`).toString('utf8'),
+  icon='',h;
+switch (status) {
+case 'Playing':
+  icon='';
+  break;
+case 'Paused':
+  icon='';
+  break;
+default:
+  h=true;
+  break;
+}
+if (!h) {
+  console.log(icon,title,artist,album);
+}

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
 const {exec} = require('child_process');
-exec(`uptime|awk '{print $3}'`,(e,s,se)=>{
+exec(`uptime|awk '{print $3}'`,(e,s)=>{
   console.log(s.replace(',',''));
-})
+});

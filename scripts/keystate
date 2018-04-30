@@ -3,17 +3,17 @@ const {exec}=require('child_process');
 const b=process.env.BLOCK_INSTANCE;
 let p;
 switch(b) {
-    case 'caps':
-        p=`'{print $4}'`;
-        break;
-    case 'num':
-        p=`'{print $8}'`;
-        break;
-    case 'scroll':
-        p=`'{print $12}'`;
-        break;
+case 'caps':
+  p=`'{print $4}'`;
+  break;
+case 'num':
+  p=`'{print $8}'`;
+  break;
+case 'scroll':
+  p=`'{print $12}'`;
+  break;
 }
-exec('xset -q | grep "Num Lock" | awk '+p, (e, s, se) => {
+exec('xset -q | grep "Num Lock" | awk '+p, (e, s) => {
   if (s.indexOf('on')!==-1) {
     console.log(s);
   }

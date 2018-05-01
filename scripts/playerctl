@@ -18,5 +18,5 @@ default:
   break;
 }
 if (!h) {
-  console.log(icon,title,artist,album);
+  console.log(`${icon} ${title} ~ ${artist} ~ ${album}`);
 }
